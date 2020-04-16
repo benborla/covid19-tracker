@@ -9,12 +9,7 @@ import {
 export function Covid19 () {
   const data = useSelector(selectData)
   const dispatch = useDispatch()
-  const [info, setInfo] = useState({
-    confirmed: 0,
-    deaths: 0,
-    recovered: 0,
-    lastUpdate: null
-  })
+  const [info, setInfo] = useState()
 
   useEffect(() => {
     dispatch(fetchCovid19Data())
@@ -32,11 +27,11 @@ export function Covid19 () {
     }
   }
 
-  const confirmed = data.loading ? 0 : info && info.confirmed
-  const deaths = data.loading ? 0 : info && info.deaths
-  const recovered = data.loading ? 0 : info && info.recovered
-  const lastUpdate = data.loading ? null : info && info.lastUpdate
-  const timeUpdated = data.loading ? null : info && new Date(lastUpdate).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
+  const confirmed = !data.loading && info && info.confirmed
+  const deaths = !data.loading && info && info.deaths
+  const recovered = !data.loading && info && info.recovered
+  const lastUpdate = !data.loading && info && info.lastUpdate
+  const timeUpdated = !data.loading && info && new Date(lastUpdate).toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
 
   return (
     <>
