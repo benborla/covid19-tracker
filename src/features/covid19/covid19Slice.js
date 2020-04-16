@@ -1,12 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit'
-import axios from 'axios'
+import { getCovid19Data } from './../../api'
 
 export const FETCH_DATA_REQUEST = 'FETCH_DATA_REQUEST'
 export const FETCH_DATA_SUCCESS = 'FETCH_DATA_SUCCESS'
 export const FETCH_DATA_FAIL = 'FETCH_DATA_FAIL'
-
-const url = 'https://covid19.mathdro.id/api'
-const country = 'ph'
 
 const error = {
   code: 500,
@@ -26,9 +23,10 @@ export const covid19Slice = createSlice({
       const { payload } = action
       switch (payload.type) {
         case FETCH_DATA_SUCCESS:
-          state.data.info = payload.data
-        default:
           state.data.loading = false
+          state.data.info = payload.data
+          break
+        default:
       }
     }
   }
@@ -37,7 +35,7 @@ export const covid19Slice = createSlice({
 export const fetchCovid19Data = () => async (dispatch) => {
     await dispatch({type: FETCH_DATA_REQUEST})
     try {
-      const { data } = await axios.get(`${url}/countries/${country}`)
+      const { data } = await getCovid19Data()
       const response  = data ? { type: FETCH_DATA_SUCCESS, data } : { type: FETCH_DATA_FAIL, data: error}
       await dispatch(covid19Slice.actions.updateData(response))
     } catch (error) {

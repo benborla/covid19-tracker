@@ -25,7 +25,7 @@ export function Covid19 () {
     }, UPDATE_EVERY_FIVE_MINUTES)
 
     dispatch(fetchCovid19Data())
-  }, [])
+  }, [dispatch])
 
   useEffect(() => {
     getInfo()
