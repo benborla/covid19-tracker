@@ -22,13 +22,13 @@ export const covid19Slice = createSlice({
     }
   },
   reducers: {
-    fetch: (state, action) => {
+    updateData: (state, action) => {
       const { payload } = action
       switch (payload.type) {
         case FETCH_DATA_SUCCESS:
-          state.data.loading = false
           state.data.info = payload.data
-        break
+        default:
+          state.data.loading = false
       }
     }
   }
@@ -39,7 +39,7 @@ export const fetchCovid19Data = () => async (dispatch) => {
     try {
       const { data } = await axios.get(`${url}/countries/${country}`)
       const response  = data ? { type: FETCH_DATA_SUCCESS, data } : { type: FETCH_DATA_FAIL, data: error}
-      await dispatch(covid19Slice.actions.fetch(response))
+      await dispatch(covid19Slice.actions.updateData(response))
     } catch (error) {
       dispatch({ type: FETCH_DATA_FAIL, payload: { message: error }})
     }
