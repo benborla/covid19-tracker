@@ -5,6 +5,7 @@ import {
   selectData,
   fetchCovid19Data
 } from './covid19Slice'
+import config from '../../config'
 
 const UPDATE_EVERY_FIVE_MINUTES = 60000 * 5
 
@@ -47,7 +48,7 @@ export function Covid19 () {
 
   return (
     <>
-      <h1>Philippines Pandemic Update</h1>
+      <h1>{config.country} Pandemic Update</h1>
       <h3>Confirmed <CountUp start={0} end={confirmed} duration={1.50} separator=', ' /></h3>
       <h3>Deaths <CountUp start={0} end={deaths} duration={1.50} separator=', ' /></h3>
       <h3>Recovered <CountUp start={0} end={recovered} duration={1.50} separator=', ' /></h3>
